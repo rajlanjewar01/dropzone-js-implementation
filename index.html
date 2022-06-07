@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+    <title>Document</title>
+</head>
+<body>
+
+    <form class="dropzone" id="my-dropzone"> </form>
+
+    <button id="upload">upload</button>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+      
+    <script>
+        Dropzone.autoDiscover = false;
+        let myDropzone = new Dropzone("#my-dropzone", { 
+            url: "upload.php",
+            method: "post",
+            parallelUploads: 3,
+            uploadMultiple: true,
+            acceptedFiles: 'image/*',
+            autoProcessQueue: false,
+            succuess: function(file, response){
+                if(response == "true"){
+                    $("#my-dropzone").hide();
+                    $("#my-dropzone").append("<p>uploaded</p>");
+                }else{
+                    $("#my-dropzone").append("<p>failed</p>")
+                }
+            }
+        });
+
+        $("#upload").on('click', function(){
+            myDropzone.processQueue();
+        })
+    </script>
+</body>
+</html>
